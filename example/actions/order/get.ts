@@ -1,16 +1,16 @@
 import { NotFoundError, Action } from 'gutenpress'
 import { getOrdersForUser, Order } from 'example/database'
+import { Token } from 'example/wrappers/authenticate'
 
 export const getOrderById: Action<
   Order,
-  { userId: string },
-  { id: string }
-> = async ({ userId }, { id: orderId }) => {
-  const orders = await getOrdersForUser(userId)
-  const order = orders.find(({ id }) => id === orderId)
+  { query: { id: string }; context: Token }
+> = async ({ query, context: token }) => {
+  const orders = await getOrdersForUser(token.userId)
+  const order = orders.find(({ id }) => id === query.id)
 
   if (order === undefined) {
-    return new NotFoundError(`No order with id ${orderId}`)
+    return new NotFoundError(`No order with id ${query.id}`)
   }
 
   return order

@@ -48,12 +48,29 @@ export const getOrdersForUser = async (
   userId: string,
 ): Promise<Order[] | undefined> => DB[userId]?.orders
 
+export const createOrderForUser = async (
+  userId: string,
+  order: Order & { id: undefined },
+): Promise<Order | undefined> => {
+  if (!(await existsUser(userId))) return
+  const orders = await getOrdersForUser(userId)
+  const biggerId = Math.max(...orders.map(order => parseInt(order.id)))
+  const createdOrder = {
+    ...order,
+    id: String(biggerId + 1),
+  }
+
+  orders.push(createdOrder)
+
+  return createdOrder
+}
+
 export const updateOrderForUser = async (
   userId: string,
   orderId: string,
   order: Partial<Order>,
 ): Promise<boolean> => {
-  if (!existsUser(userId)) return false
+  if (!(await existsUser(userId))) return false
   const orders = await getOrdersForUser(userId)
 
   const previousOrderIndex = orders.findIndex(order => order.id === orderId)
@@ -72,7 +89,7 @@ export const deleteOrderForUser = async (
   userId: string,
   orderId: string,
 ): Promise<boolean> => {
-  if (!existsUser(userId)) return false
+  if (!(await existsUser(userId))) return false
   const orders = await getOrdersForUser(userId)
 
   const orderIndex = orders.findIndex(order => order.id === orderId)

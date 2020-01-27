@@ -3,11 +3,10 @@ import { Action, HTTPMethod } from './types'
 const actionHandler = (method: HTTPMethod) => <
   Path extends string,
   DataResponse,
-  Context,
   Params
 >(
   path: Path,
-  action: Action<DataResponse, Context, Params>,
+  action: Action<DataResponse, Params>,
 ) => ({
   [path]: {
     [method]: action,
