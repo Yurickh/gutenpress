@@ -80,6 +80,7 @@ export const updateOrderForUser = async (
   orders[previousOrderIndex] = {
     ...orders[previousOrderIndex],
     ...order,
+    id: orders[previousOrderIndex].id,
   }
 
   return true
