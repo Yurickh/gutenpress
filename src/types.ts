@@ -1,9 +1,7 @@
-export type Action = Function
+type Maybe<T> = T | undefined | Error
+
+export interface Action<DataResponse, Params = {}, Context = {}> {
+  (params: Params, context: Context): Promise<Maybe<DataResponse>>
+}
 
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
-
-export type API = {
-  [path: string]: {
-    [method in HTTPMethod]?: Action
-  }
-}

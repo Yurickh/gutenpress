@@ -1,13 +1,13 @@
 // This is here for entertainment and for example purposes only
 // Please don't use this code for reference of anything in your life
 
-interface Order {
+export interface Order {
   id: string
   product: string
   value: number
 }
 
-interface User {
+export interface User {
   name: string
   phoneNumber: string
   orders: Order[]
