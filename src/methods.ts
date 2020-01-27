@@ -1,9 +1,13 @@
-import { Action, HTTPMethod } from './types'
+import { Action, HTTPMethod, RequestParams } from './types'
 
-const actionHandler = (method: HTTPMethod) => <
+type ParamsFor<Method> = Method extends 'GET'
+  ? Omit<RequestParams, 'body'>
+  : RequestParams
+
+const actionHandler = <Method extends HTTPMethod>(method: Method) => <
   Path extends string,
   DataResponse,
-  Params
+  Params extends ParamsFor<Method>
 >(
   path: Path,
   action: Action<DataResponse, Params>,

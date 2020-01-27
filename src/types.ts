@@ -1,6 +1,6 @@
 type Maybe<T> = T | undefined | Error
 
-type RequestParams = {
+export type RequestParams = {
   query?: object
   body?: object
   context?: object

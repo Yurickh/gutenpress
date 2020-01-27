@@ -7,7 +7,7 @@ import { updateOrderById } from './actions/order/update'
 import { contactDetails } from './actions/contact-details'
 
 export default toRouter([
-  get('/login', login),
+  post('/login', login),
   wrap(authenticate, [
     // You can declare endpoints inline
     path('/order', [

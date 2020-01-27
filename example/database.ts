@@ -102,6 +102,6 @@ export const deleteOrderForUser = async (
 }
 
 export const authenticate = async (
-  email: string,
+  username: string,
   password: string,
-): Promise<boolean> => email === 'admin' && password === 'admin'
+): Promise<boolean> => username === 'admin' && password === 'admin'
