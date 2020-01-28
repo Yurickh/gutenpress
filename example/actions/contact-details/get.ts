@@ -1,11 +1,15 @@
-import { Action } from 'gutenpress'
+import { RequestParams } from 'gutenpress'
 import { Token } from 'example/wrappers/authenticate'
-import { getUser } from 'example/database'
+import { getUser, User } from 'example/database'
 
-export const getContactDetails: Action<
-  { name: string; phoneNumber: string },
-  { context: Token }
-> = async ({ context: token }) => {
+interface Params extends RequestParams {
+  context: Token
+}
+type Response = Pick<User, 'name' | 'phoneNumber'>
+
+export const getContactDetails = async ({
+  context: token,
+}: Params): Promise<Response> => {
   const user = await getUser(token.userId)
 
   return {

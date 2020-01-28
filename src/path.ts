@@ -1,25 +1,36 @@
-import { API } from './types'
 import { fromEntries } from './helpers/fromEntries'
 
-const prefixAPI = (prefix: string) => (api: API): API =>
+const prefixAPI = (prefix: string) => <API>(
+  api: Record<string, API>,
+): Record<string, API> =>
   fromEntries(
-    Object.entries(api).map(([path, action]) => [`${prefix}${path}`, action]),
+    Object.entries(api).map(([path, methods]) => [`${prefix}${path}`, methods]),
   )
 
-const mergeAPIs = (apis: API[]): API =>
-  apis.reduce((acc, curr) => {
-    const allPaths = new Set([...Object.keys(acc), ...Object.keys(curr)])
+const combineAPIs = <Source, Target>(
+  sourceAPI: Record<string, Source>,
+  targetAPI: Record<string, Target>,
+): Record<string, Source & Target> => {
+  const allPaths = new Set([
+    ...Object.keys(sourceAPI),
+    ...Object.keys(targetAPI),
+  ])
 
-    return fromEntries(
-      Array.from(allPaths).map(path => [
-        path,
-        {
-          ...acc[path],
-          ...curr[path],
-        },
-      ]),
-    )
-  }, {} as API)
+  return fromEntries(
+    Array.from(allPaths).map(path => [
+      path,
+      {
+        ...sourceAPI[path],
+        ...targetAPI[path],
+      },
+    ]),
+  )
+}
 
-export const path = (prefix: string, apis: API[]): API =>
-  mergeAPIs(apis.map(prefixAPI(prefix)))
+const mergeAPIs = <API>(apis: Record<string, API>[]): Record<string, API> =>
+  apis.reduce(combineAPIs, {})
+
+export const path = <Prefix extends string, Path extends string, Resource>(
+  prefix: Prefix,
+  apis: Record<Path, Resource>[],
+): Record<Path, Resource> => mergeAPIs(apis.map(prefixAPI(prefix)))

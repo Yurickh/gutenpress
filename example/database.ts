@@ -50,7 +50,7 @@ export const getOrdersForUser = async (
 
 export const createOrderForUser = async (
   userId: string,
-  order: Order & { id: undefined },
+  order: Omit<Order, 'id'>,
 ): Promise<Order | undefined> => {
   if (!(await existsUser(userId))) return
   const orders = await getOrdersForUser(userId)

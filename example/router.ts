@@ -10,11 +10,11 @@ export default toRouter([
   post('/login', login),
   wrap(authenticate, [
     // You can declare endpoints inline
-    path('/order', [
-      get('/:id', getOrderById),
-      post('/', createOrder),
-      put('/:id', updateOrderById),
-    ]),
+    // path('/order', [
+    get('/:id', getOrderById),
+    post('/', createOrder),
+    put('/:id', updateOrderById),
+    // ]),
 
     // Or import them from somewhere elase
     contactDetails,

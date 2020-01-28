@@ -1,10 +1,13 @@
-import { Action, UnauthorizedError } from 'gutenpress'
+import { UnauthorizedError, RequestParams } from 'gutenpress'
 import { authenticate } from 'example/database'
 
-export const login: Action<
-  string,
-  { body: { username: string; password: string } }
-> = async ({ body }) => {
+interface Params extends RequestParams {
+  body: { username: string; password: string }
+}
+
+type Response = string | UnauthorizedError
+
+export const login = async ({ body }: Params): Promise<Response> => {
   const { username, password } = body
   const canLogIn = await authenticate(username, password)
 

@@ -1,22 +1,18 @@
-import { Action, HTTPMethod, RequestParams } from './types'
+import { HTTPMethod, RequestParamsForMethod } from './types'
 
-type ParamsFor<Method> = Method extends 'GET'
-  ? Omit<RequestParams, 'body'>
-  : RequestParams
-
-const actionHandler = <Method extends HTTPMethod>(method: Method) => <
+const createHandlerForMethod = <Method extends HTTPMethod>(method: Method) => <
   Path extends string,
-  DataResponse,
-  Params extends ParamsFor<Method>
+  Response extends Promise<{} | undefined | Error>,
+  Params extends RequestParamsForMethod<Method>
 >(
   path: Path,
-  action: Action<DataResponse, Params>,
+  action: (params: Params) => Response,
 ) => ({
   [path]: {
     [method]: action,
   },
 })
 
-export const get = actionHandler('GET')
-export const post = actionHandler('POST')
-export const put = actionHandler('PUT')
+export const get = createHandlerForMethod('GET')
+export const post = createHandlerForMethod('POST')
+export const put = createHandlerForMethod('PUT')
