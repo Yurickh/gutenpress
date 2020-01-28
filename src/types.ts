@@ -9,6 +9,7 @@ export interface RequestParams {
 interface GetParams {
   readonly query?: object
   readonly context?: object
+  readonly body?: object
 }
 
 export type RequestParamsForMethod<
