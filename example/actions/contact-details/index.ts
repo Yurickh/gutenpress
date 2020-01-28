@@ -1,10 +1,11 @@
-import { get, RequestParams } from 'gutenpress'
+import { get } from 'gutenpress'
 import { Token } from 'example/wrappers/authenticate'
 import { getUser, User } from 'example/database'
 
-interface Params extends RequestParams {
+type Params = {
   context: Token
 }
+
 type Response = Pick<User, 'name' | 'phoneNumber'>
 
 const getContactDetails = async ({

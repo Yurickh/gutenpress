@@ -1,8 +1,8 @@
-import { InternalServerError, RequestParams } from 'gutenpress'
+import { InternalServerError } from 'gutenpress'
 import { Order, createOrderForUser } from 'example/database'
 import { Token } from 'example/wrappers/authenticate'
 
-interface Params extends RequestParams {
+type Params = {
   body: Omit<Order, 'id'>
   context: Token
 }
