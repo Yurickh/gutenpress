@@ -16,7 +16,7 @@ export default toRouter([
     put('/:id', updateOrderById),
     // ]),
 
-    // Or import them from somewhere elase
+    // Or import them from somewhere else
     contactDetails,
   ]),
 ])
