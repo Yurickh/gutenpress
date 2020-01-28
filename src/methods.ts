@@ -7,11 +7,12 @@ const createHandlerForMethod = <Method extends HTTPMethod>(method: Method) => <
 >(
   path: Path,
   action: (params: Params) => Response,
-) => ({
-  [path]: {
-    [method]: action,
-  },
-})
+) =>
+  ({
+    [path]: {
+      [method]: action,
+    },
+  } as { [p in Path]: { [m in Method]: typeof action } })
 
 export const get = createHandlerForMethod('GET')
 export const post = createHandlerForMethod('POST')
