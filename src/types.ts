@@ -1,17 +1,29 @@
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
-export interface RequestParams {
+export type KeysOf<T> = T extends any ? keyof T : never
+
+export interface RequestParams<Context> {
   readonly query?: object
   readonly body?: object
-  readonly context?: object
+  readonly context?: Context
 }
 
-interface GetParams {
+interface GetParams<Context> {
   readonly query?: object
-  readonly context?: object
+  readonly context?: Context
   readonly body?: undefined
 }
 
 export type RequestParamsForMethod<
-  Method extends HTTPMethod
-> = Method extends 'GET' ? GetParams : RequestParams
+  Method extends HTTPMethod,
+  Context = object
+> = Method extends 'GET' ? GetParams<Context> : RequestParams<Context>
+
+export type Resource<Path extends string, Context = object> = {
+  [path in Path]: {
+    [method in HTTPMethod]?: (
+      params: RequestParamsForMethod<method, Context>,
+      request: Request,
+    ) => Error | undefined | unknown
+  }
+}
