@@ -1,4 +1,4 @@
-import { get, post, put, toRouter, path, wrap } from 'gutenpress'
+import { get, post, put, toRouter, wrap } from 'gutenpress'
 import { login } from './actions/login'
 import { authenticate } from './wrappers/authenticate'
 import { getOrderById } from './actions/order/get'
@@ -10,11 +10,10 @@ export default toRouter([
   post('/login', login),
   wrap(authenticate, [
     // You can declare endpoints inline
-    path('/order', [
-      get('/:id', getOrderById),
-      post('/', createOrder),
-      put('/:id', updateOrderById),
-    ]),
+
+    get('/:id', getOrderById),
+    post('/', createOrder),
+    put('/:id', updateOrderById),
 
     // Or import them from somewhere else
     contactDetails,
