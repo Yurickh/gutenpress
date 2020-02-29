@@ -1,10 +1,10 @@
-export const fromEntries = <Key extends string, Value>(
-  entries: [Key, Value][],
-): Record<Key, Value> =>
+export const fromEntries = <Target>(
+  entries: [keyof Target, Target[keyof Target]][],
+): Target =>
   entries.reduce(
     (acc, [key, value]) => ({
       ...acc,
       [key]: value,
     }),
-    {} as Record<Key, Value>,
+    {} as Target,
   )
