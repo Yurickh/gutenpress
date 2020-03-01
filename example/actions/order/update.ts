@@ -1,11 +1,10 @@
-import { NotFoundError } from 'gutenpress'
+import { NotFoundError, RequestParams } from 'gutenpress'
 import { Order, updateOrderForUser } from 'example/database'
 import { Token } from 'example/wrappers/authenticate'
 
-type Params = {
+interface Params extends RequestParams<Token> {
   query: { id: string }
   body: Partial<Order>
-  context: Token
 }
 
 type Response = undefined | NotFoundError

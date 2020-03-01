@@ -1,15 +1,14 @@
-import { UnauthorizedError } from 'gutenpress'
+import { UnauthorizedError, RequestParams } from 'gutenpress'
 import { authenticate as authenticateInDatabase } from '../database'
 
 export type Token = {
   userId: string
 }
 
-export const authenticate = (
-  _context: {},
-  request: Request,
-): Token | UnauthorizedError => {
-  const [_bearer, token] = request.headers.get('authorization').split(' ')
+export const authenticate = ({
+  headers,
+}: RequestParams): Token | UnauthorizedError => {
+  const [_bearer, token] = headers.authorization.split(' ')
   const [username, password] = atob(token).split(':')
 
   if (authenticateInDatabase(username, password)) {

@@ -1,10 +1,8 @@
-import { get } from 'gutenpress'
+import { get, GetParams } from 'gutenpress'
 import { Token } from 'example/wrappers/authenticate'
 import { getUser, User } from 'example/database'
 
-type Params = {
-  context: Token
-}
+type Params = GetParams<Token>
 
 type Response = Pick<User, 'name' | 'phoneNumber'>
 
