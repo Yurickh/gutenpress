@@ -1,16 +1,12 @@
-import {
-  Resource,
-  KeysOf,
-  RequestParamsForMethod,
-  HTTPMethod,
-  Action,
-} from './types'
+import { Resource, KeysOf, HTTPMethod, Action, RequestParams } from './types'
 import { spreadResources } from './helpers/spreadResources'
 import { mapObject } from './helpers/mapObject'
 
+type NonErrorReturn<T> = T extends Error ? never : T
+
 type Wrapper<OutputContext, InputContext = object> = (
-  params: RequestParamsForMethod<HTTPMethod, InputContext>,
-) => OutputContext | Error
+  params: RequestParams<InputContext, HTTPMethod>,
+) => OutputContext
 
 const applyWrapper = <InputContext, OutputContext>(
   wrapper: Wrapper<OutputContext, InputContext>,
@@ -23,7 +19,7 @@ const applyWrapper = <InputContext, OutputContext>(
       mapObject(
         ([methodName, action]) => [
           methodName,
-          (params: RequestParamsForMethod<typeof methodName, InputContext>) => {
+          (params: RequestParams<InputContext, typeof methodName>) => {
             const outputContext = wrapper(params)
 
             if (outputContext instanceof Error) {
@@ -45,7 +41,7 @@ const applyWrapper = <InputContext, OutputContext>(
 export const wrap = <
   InputContext,
   OutputContext,
-  Resources extends Resource<any, OutputContext>[]
+  Resources extends Resource<any, NonErrorReturn<OutputContext>>[]
 >(
   wrapper: Wrapper<OutputContext, InputContext>,
   resources: Resources,

@@ -1,8 +1,8 @@
-import { NotFoundError, GetParams } from 'gutenpress'
+import { NotFoundError, RequestParams } from 'gutenpress'
 import { getOrdersForUser, Order } from 'example/database'
 import { Token } from 'example/wrappers/authenticate'
 
-interface Params extends GetParams<Token> {
+interface Params extends RequestParams<Token> {
   query: { id: string }
 }
 

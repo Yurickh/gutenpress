@@ -1,8 +1,8 @@
-import { get, GetParams } from 'gutenpress'
+import { get, RequestParams } from 'gutenpress'
 import { Token } from 'example/wrappers/authenticate'
 import { getUser, User } from 'example/database'
 
-type Params = GetParams<Token>
+type Params = RequestParams<Token>
 
 type Response = Pick<User, 'name' | 'phoneNumber'>
 
