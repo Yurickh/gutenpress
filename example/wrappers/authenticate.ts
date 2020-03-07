@@ -9,7 +9,9 @@ export const authenticate = ({
   headers,
 }: RequestParams): Token | UnauthorizedError => {
   const [_bearer, token] = headers.authorization.split(' ')
-  const [username, password] = atob(token).split(':')
+  const [username, password] = Buffer.from(token, 'base64')
+    .toString()
+    .split(':')
 
   if (authenticateInDatabase(username, password)) {
     return {

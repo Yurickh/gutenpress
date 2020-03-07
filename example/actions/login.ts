@@ -12,7 +12,7 @@ export const login = async ({ body }: Params): Promise<Response> => {
   const canLogIn = await authenticate(username, password)
 
   if (canLogIn) {
-    return btoa(`${username}:${password}`)
+    return Buffer.from(`${username}:${password}`).toString('base64')
   } else {
     return new UnauthorizedError('Wrong username or password')
   }
