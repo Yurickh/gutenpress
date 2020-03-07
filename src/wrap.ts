@@ -5,7 +5,7 @@ import {
   RequestParams,
   MethodGroup,
 } from './types'
-import { spreadResources } from './helpers/spreadResources'
+import { combine } from './helpers/combine'
 import { mapObject } from './helpers/mapObject'
 
 type NonErrorReturn<T> = T extends Error ? never : T
@@ -57,5 +57,5 @@ export const wrap = <
 > => {
   const mappedResources = resources.map(wrapResource(wrapper))
 
-  return spreadResources(mappedResources)
+  return combine(mappedResources)
 }

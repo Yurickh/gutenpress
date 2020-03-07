@@ -1,6 +1,6 @@
 import { Resource, KeysOf } from '../types'
 
-export const spreadResources = <
+export const combine = <
   Context,
   Resources extends Resource<Path, Context>[],
   Path extends string = any

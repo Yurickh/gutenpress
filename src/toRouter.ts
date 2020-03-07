@@ -1,5 +1,5 @@
 import * as http from 'http'
-import { spreadResources } from './helpers/spreadResources'
+import { combine } from './helpers/combine'
 import { Resource } from './types'
 import { ClientError, ServerError } from './errors'
 
@@ -37,7 +37,7 @@ export const toRouter = <
     InitialContext
   >,
 ) => {
-  const resource = spreadResources<InitialContext, Resources>(resources)
+  const resource = combine<InitialContext, Resources>(resources)
 
   return (req: http.IncomingMessage, res: http.ServerResponse) => {
     const selectedResource = resource[req.url]
