@@ -16,10 +16,11 @@
   "scripts": {
     "build": "microbundle --target node",
     "develop": "microbundle watch",
-    "example": "nodemon example/index.ts",
+    "example": "nodemon -r tsconfig-paths/register example/index.ts",
     "lint": "eslint --ext js,jsx,ts,tsx ."
   },
   "devDependencies": {
+    "@types/node": "^13.9.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "eslint": "^6.8.0",
@@ -31,6 +32,7 @@
     "nodemon": "^2.0.2",
     "prettier": "npm:@btmills/prettier",
     "ts-node": "^8.6.2",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.5"
   }
 }
