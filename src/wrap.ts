@@ -37,15 +37,12 @@ const wrapMethods = <InputContext, OutputContext>(
     single,
   )
 
-const applyWrapper = <InputContext, OutputContext>(
+const wrapResource = <InputContext, OutputContext>(
   wrapper: Wrapper<OutputContext, InputContext>,
-) => <Path extends string>(
+): (<Path extends string>(
   resource: Resource<Path, OutputContext>,
-): Resource<Path, InputContext> =>
-  mapObject(
-    ([path, methods]) => [path, wrapMethods(wrapper, methods)],
-    resource,
-  )
+) => Resource<Path, InputContext>) =>
+  mapObject(([path, methods]) => [path, wrapMethods(wrapper, methods)])
 
 export const wrap = <
   InputContext,
@@ -58,7 +55,7 @@ export const wrap = <
   Resources extends (infer R)[] ? KeysOf<R> : never,
   InputContext
 > => {
-  const mappedResources = resources.map(applyWrapper(wrapper))
+  const mappedResources = resources.map(wrapResource(wrapper))
 
   return spreadResources(mappedResources)
 }
