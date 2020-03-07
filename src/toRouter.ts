@@ -6,7 +6,7 @@ import { ClientError, ServerError } from './errors'
 const resolve = (
   res: http.ServerResponse,
   statusCode: number,
-  response?: object,
+  response?: unknown,
 ) => {
   res.statusCode = statusCode
 
@@ -18,19 +18,26 @@ const resolve = (
   }
 }
 
-const defaultInitialContextBuilder = (
+type InitialContextBuilder<InitialContext> = (
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+) => InitialContext
+
+const defaultInitialContextBuilder: InitialContextBuilder<{}> = (
   _req: http.IncomingMessage,
   _res: http.ServerResponse,
 ) => ({})
 
-export const toRouter = <Resources extends Resource<any, {}>[]>(
+export const toRouter = <
+  InitialContext = {},
+  Resources extends Resource<any, InitialContext>[] = []
+>(
   resources: Resources,
-  initialContextBuilder: (
-    req: http.IncomingMessage,
-    res: http.ServerResponse,
-  ) => object = defaultInitialContextBuilder,
+  initialContextBuilder = defaultInitialContextBuilder as InitialContextBuilder<
+    InitialContext
+  >,
 ) => {
-  const resource = spreadResources(resources)
+  const resource = spreadResources<InitialContext, Resources>(resources)
 
   return (req: http.IncomingMessage, res: http.ServerResponse) => {
     const selectedResource = resource[req.url]
@@ -52,8 +59,8 @@ export const toRouter = <Resources extends Resource<any, {}>[]>(
     req.on('data', data => (bodyBuffer += data))
 
     req.on('end', () => {
-      let body
-      let handlerResponse
+      let body: object
+      let handlerResponse: unknown
 
       try {
         if (bodyBuffer !== '') {
