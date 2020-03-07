@@ -17,12 +17,18 @@ type Database = {
   [id: string]: User
 }
 
-const DB = {} as Database
+const DB = {
+  admin: {
+    name: 'Root user',
+    phoneNumber: '+55000000',
+    orders: [],
+  },
+} as Database
 
 export const getUser = async (id: string): Promise<User | undefined> => DB[id]
 
 const existsUser = async (id: string): Promise<boolean> =>
-  (await getUser(id)) === undefined
+  (await getUser(id)) !== undefined
 
 export const updateUser = async (
   id: string,
@@ -54,7 +60,10 @@ export const createOrderForUser = async (
 ): Promise<Order | undefined> => {
   if (!(await existsUser(userId))) return
   const orders = await getOrdersForUser(userId)
-  const biggerId = Math.max(...orders.map(order => parseInt(order.id)))
+  const biggerId =
+    orders.length === 0
+      ? 0
+      : Math.max(...orders.map(order => parseInt(order.id)))
   const createdOrder = {
     ...order,
     id: String(biggerId + 1),
