@@ -1,4 +1,10 @@
-import { Resource, KeysOf, HTTPMethod, Action, RequestParams } from './types'
+import {
+  Resource,
+  KeysOf,
+  HTTPMethod,
+  RequestParams,
+  MethodGroup,
+} from './types'
 import { spreadResources } from './helpers/spreadResources'
 import { mapObject } from './helpers/mapObject'
 
@@ -8,33 +14,36 @@ type Wrapper<OutputContext, InputContext = object> = (
   params: RequestParams<InputContext, HTTPMethod>,
 ) => OutputContext
 
+const wrapMethods = <InputContext, OutputContext>(
+  wrapper: Wrapper<OutputContext, InputContext>,
+  single: MethodGroup<OutputContext>,
+): MethodGroup<InputContext> =>
+  mapObject(
+    ([methodName, action]) => [
+      methodName,
+      (params: RequestParams<InputContext, typeof methodName>) => {
+        const outputContext = wrapper(params)
+
+        if (outputContext instanceof Error) {
+          return outputContext
+        }
+
+        return action({
+          ...params,
+          context: outputContext,
+        })
+      },
+    ],
+    single,
+  )
+
 const applyWrapper = <InputContext, OutputContext>(
   wrapper: Wrapper<OutputContext, InputContext>,
 ) => <Path extends string>(
   resource: Resource<Path, OutputContext>,
 ): Resource<Path, InputContext> =>
   mapObject(
-    ([path, methods]) => [
-      path,
-      mapObject(
-        ([methodName, action]) => [
-          methodName,
-          (params: RequestParams<InputContext, typeof methodName>) => {
-            const outputContext = wrapper(params)
-
-            if (outputContext instanceof Error) {
-              return outputContext
-            }
-
-            return (action as Action<typeof methodName, OutputContext>)({
-              ...params,
-              context: outputContext,
-            })
-          },
-        ],
-        methods,
-      ),
-    ],
+    ([path, methods]) => [path, wrapMethods(wrapper, methods)],
     resource,
   )
 

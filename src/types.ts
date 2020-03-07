@@ -16,8 +16,10 @@ export type Action<Method extends HTTPMethod, Context = object> = (
   params: RequestParams<Context, Method>,
 ) => Error | undefined | unknown
 
+export type MethodGroup<Context> = {
+  [method in HTTPMethod]?: Action<method, Context>
+}
+
 export type Resource<Path extends string, Context = object> = {
-  [path in Path]: {
-    [method in HTTPMethod]?: Action<method, Context>
-  }
+  [path in Path]: MethodGroup<Context>
 }
