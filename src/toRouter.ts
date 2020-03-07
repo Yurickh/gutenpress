@@ -18,8 +18,17 @@ const resolve = (
   }
 }
 
+const defaultInitialContextBuilder = (
+  _req: http.IncomingMessage,
+  _res: http.ServerResponse,
+) => ({})
+
 export const toRouter = <Resources extends Resource<any, {}>[]>(
   resources: Resources,
+  initialContextBuilder: (
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+  ) => object = defaultInitialContextBuilder,
 ) => {
   const resource = spreadResources(resources)
 
@@ -59,7 +68,7 @@ export const toRouter = <Resources extends Resource<any, {}>[]>(
       try {
         handlerResponse = selectedHandler({
           body,
-          context: {},
+          context: initialContextBuilder(req, res),
           headers: req.headers,
         })
       } catch (error) {
