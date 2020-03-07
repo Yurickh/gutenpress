@@ -6,6 +6,7 @@ import { createOrder } from './actions/order/create'
 import { updateOrderById } from './actions/order/update'
 import { contactDetails } from './actions/contact-details'
 
+// TODO: add tests for types that ensure we scream if a method is placed in the wrong place
 export default toRouter([
   post('/login', login),
   wrap(authenticate, [
