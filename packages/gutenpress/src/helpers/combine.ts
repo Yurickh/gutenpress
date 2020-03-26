@@ -7,6 +7,7 @@ export const combine = <
 >(
   resources: Resources,
 ): Resource<Resources extends (infer R)[] ? KeysOf<R> : never, Context> => {
+  // TODO: merge methods that belong to the same path together
   return resources.reduce(
     (acc, curr) => ({
       ...acc,

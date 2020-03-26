@@ -1,7 +1,7 @@
 // https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
 
-export class ClientError extends Error {
-  statusCode: number
+export abstract class ClientError extends Error {
+  abstract statusCode: number
 
   constructor(message: string) {
     super(message)
@@ -90,8 +90,8 @@ export class UnsupportedMediaTypeError extends ClientError {
   }
 }
 
-export class ServerError extends Error {
-  statusCode: number
+export abstract class ServerError extends Error {
+  abstract statusCode: number
 
   constructor(message: string) {
     super(message)

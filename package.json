@@ -2,37 +2,31 @@
   "name": "gutenpress",
   "version": "0.1.0",
   "description": "A typed, functional and declarative way of writing your nodeJS APIs",
-  "main": "lib/gutenpress.js",
-  "module": "lib/gutenpress.mjs",
-  "source": "src/index.ts",
-  "types": "lib/index.d.ts",
   "repository": "git@github.com:Yurickh/gutenpress.git",
   "author": "Yurick <yurick.hauschild@gmail.com>",
   "license": "MIT",
   "private": false,
-  "files": [
-    "lib"
-  ],
-  "scripts": {
-    "build": "microbundle --target node",
-    "develop": "microbundle watch",
-    "example": "nodemon -r tsconfig-paths/register example/index.ts",
-    "lint": "eslint --ext js,jsx,ts,tsx ."
-  },
   "devDependencies": {
+    "@types/jest": "^25.1.4",
     "@types/node": "^13.9.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "express": "^4.17.1",
-    "husky": "^4.2.1",
+    "husky": "^4.2.3",
+    "lerna": "^3.20.2",
     "lint-staged": "^10.0.3",
-    "microbundle": "^0.12.0-next.8",
     "nodemon": "^2.0.2",
     "prettier": "npm:@btmills/prettier",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.7.5"
+    "tsdx": "^0.13.0",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  },
+  "resolutions": {
+    "minimist": "1.2.5",
+    "**/optimist/minimist": "0.2.1"
   }
 }

@@ -16,7 +16,7 @@ type Wrapper<OutputContext, InputContext = object> = (
 
 const wrapMethods = <InputContext, OutputContext>(
   wrapper: Wrapper<OutputContext, InputContext>,
-  single: MethodGroup<OutputContext>,
+  single: MethodGroup<NonErrorReturn<OutputContext>>,
 ): MethodGroup<InputContext> =>
   mapObject(
     ([methodName, action]) => [
@@ -28,9 +28,13 @@ const wrapMethods = <InputContext, OutputContext>(
           return outputContext
         }
 
+        if (action === undefined) {
+          return undefined
+        }
+
         return action({
           ...params,
-          context: outputContext,
+          context: outputContext as NonErrorReturn<OutputContext>,
         })
       },
     ],
@@ -40,7 +44,7 @@ const wrapMethods = <InputContext, OutputContext>(
 const wrapResource = <InputContext, OutputContext>(
   wrapper: Wrapper<OutputContext, InputContext>,
 ): (<Path extends string>(
-  resource: Resource<Path, OutputContext>,
+  resource: Resource<Path, NonErrorReturn<OutputContext>>,
 ) => Resource<Path, InputContext>) =>
   mapObject(([path, methods]) => [path, wrapMethods(wrapper, methods)])
 
