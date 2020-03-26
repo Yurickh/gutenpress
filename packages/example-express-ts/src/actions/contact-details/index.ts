@@ -1,6 +1,6 @@
 import { get, RequestParams } from 'gutenpress'
-import { Token } from 'wrappers/authenticate'
-import { getUser, User } from 'database'
+import { Token } from '../../wrappers/authenticate'
+import { getUser, User } from '../../database'
 
 type Params = RequestParams<Token>
 

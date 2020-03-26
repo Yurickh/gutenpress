@@ -1,5 +1,5 @@
 import { UnauthorizedError, RequestParams } from 'gutenpress'
-import { authenticate as authenticateInDatabase } from 'database'
+import { authenticate as authenticateInDatabase } from '../database'
 
 export type Token = {
   userId: string

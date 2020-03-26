@@ -1,6 +1,6 @@
 import { NotFoundError, RequestParams } from 'gutenpress'
-import { getOrdersForUser, Order } from 'database'
-import { Token } from 'wrappers/authenticate'
+import { getOrdersForUser, Order } from '../../database'
+import { Token } from '../../wrappers/authenticate'
 
 interface Params extends RequestParams<Token> {
   query: { id: string }
