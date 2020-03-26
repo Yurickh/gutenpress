@@ -24,5 +24,9 @@
     "tsdx": "^0.13.0",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
+  },
+  "resolutions": {
+    "minimist": "1.2.5",
+    "**/optimist/minimist": "0.2.1"
   }
 }
