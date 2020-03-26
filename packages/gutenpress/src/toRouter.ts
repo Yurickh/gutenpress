@@ -1,6 +1,6 @@
 import * as http from 'http'
 import { combine } from './helpers/combine'
-import { Resource } from './types'
+import { Resource, HTTPMethod, RequestParams } from './types'
 import { ClientError, ServerError } from './errors'
 
 const resolve = (
@@ -40,13 +40,17 @@ export const toRouter = <
   const resource = combine<InitialContext, Resources>(resources)
 
   return (req: http.IncomingMessage, res: http.ServerResponse) => {
-    const selectedResource = resource[req.url]
+    if (req.url === undefined) {
+      return resolve(res, 404, { error: `Request has empty url` })
+    }
+
+    const selectedResource = resource[req.url as keyof typeof resource]
 
     if (selectedResource === undefined) {
       return resolve(res, 404, { error: `Path [${req.url}] doesn't exist` })
     }
 
-    const selectedHandler = selectedResource[req.method]
+    const selectedHandler = selectedResource[req.method as HTTPMethod]
 
     if (selectedHandler === undefined) {
       return resolve(res, 405, {
@@ -58,13 +62,14 @@ export const toRouter = <
 
     req.on('data', data => (bodyBuffer += data))
 
-    req.on('end', () => {
-      let body: object
-      let handlerResponse: unknown
+    req.on('end', async () => {
+      let body: object | undefined
 
       try {
         if (bodyBuffer !== '') {
           body = JSON.parse(bodyBuffer)
+        } else {
+          body = undefined
         }
       } catch (error) {
         return resolve(res, 400, {
@@ -73,39 +78,32 @@ export const toRouter = <
       }
 
       try {
-        handlerResponse = selectedHandler({
+        const response = await selectedHandler({
           body,
+          query: {},
           context: initialContextBuilder(req, res),
           headers: req.headers,
-        })
+        } as RequestParams<InitialContext>)
+
+        if (
+          response instanceof ClientError
+          || response instanceof ServerError
+        ) {
+          return resolve(res, response.statusCode, {
+            error: response.message,
+          })
+        }
+
+        if (response === undefined) {
+          return resolve(res, 204)
+        } else {
+          return resolve(res, 200, response)
+        }
       } catch (error) {
         // TODO: add a logger
         console.error(error)
         return resolve(res, 500, { error: 'Internal error' })
       }
-
-      Promise.resolve(handlerResponse)
-        .then(response => {
-          if (
-            response instanceof ClientError
-            || response instanceof ServerError
-          ) {
-            return resolve(res, response.statusCode, {
-              error: response.message,
-            })
-          }
-
-          if (response === undefined) {
-            return resolve(res, 204)
-          } else {
-            return resolve(res, 200, response)
-          }
-        })
-        .catch(error => {
-          // TODO: add a logger
-          console.error(error)
-          return resolve(res, 500, { error: 'Internal error' })
-        })
     })
   }
 }
