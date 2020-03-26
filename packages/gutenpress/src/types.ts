@@ -9,7 +9,7 @@ export interface RequestParams<
   readonly query: Record<string, string>
   readonly body: Method extends 'GET' ? undefined : any
   readonly context: Context
-  readonly headers?: Record<string, string | string[] | undefined>
+  readonly headers: Record<string, string>
 }
 
 export type Action<Method extends HTTPMethod, Context = object> = (
