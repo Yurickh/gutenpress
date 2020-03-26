@@ -1,5 +1,5 @@
 import { UnauthorizedError, RequestParams } from 'gutenpress'
-import { authenticate } from 'example/database'
+import { authenticate } from 'database'
 
 interface Params extends RequestParams {
   body: { username: string; password: string }

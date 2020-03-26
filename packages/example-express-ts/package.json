@@ -1,0 +1,36 @@
+{
+  "name": "example-express-ts",
+  "version": "0.0.0-alpha.1",
+  "description": "A complete typescript and express backend example of gutenpress",
+  "main": "dist/index.js",
+  "module": "dist/example-node-ts.esm.js",
+  "typings": "dist/index.d.ts",
+  "author": "Yurick <yurick.hauschild@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "eslint": {
+    "extends": "../../.eslintrc.json"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.3",
+    "tsdx": "^0.13.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "gutenpress": "^0.0.0-alpha.1"
+  }
+}

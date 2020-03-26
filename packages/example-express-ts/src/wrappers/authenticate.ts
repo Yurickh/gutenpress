@@ -1,5 +1,5 @@
 import { UnauthorizedError, RequestParams } from 'gutenpress'
-import { authenticate as authenticateInDatabase } from '../database'
+import { authenticate as authenticateInDatabase } from 'database'
 
 export type Token = {
   userId: string
@@ -8,7 +8,7 @@ export type Token = {
 export const authenticate = ({
   headers,
 }: RequestParams): Token | UnauthorizedError => {
-  const [_bearer, token] = headers.authorization.split(' ')
+  const [, token] = headers?.authorization.split(' ') || []
   const [username, password] = Buffer.from(token, 'base64')
     .toString()
     .split(':')

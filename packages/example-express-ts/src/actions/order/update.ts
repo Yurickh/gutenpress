@@ -1,6 +1,6 @@
 import { NotFoundError, RequestParams } from 'gutenpress'
-import { Order, updateOrderForUser } from 'example/database'
-import { Token } from 'example/wrappers/authenticate'
+import { Order, updateOrderForUser } from 'database'
+import { Token } from 'wrappers/authenticate'
 
 interface Params extends RequestParams<Token> {
   query: { id: string }
@@ -17,4 +17,6 @@ export const updateOrderById = async ({
   if (!(await updateOrderForUser(token.userId, query.id, order))) {
     return new NotFoundError(`Could not found order with id ${query.id}`)
   }
+
+  return undefined
 }

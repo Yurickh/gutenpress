@@ -25,7 +25,7 @@ const DB = {
   },
 } as Database
 
-export const getUser = async (id: string): Promise<User | undefined> => DB[id]
+export const getUser = async (id: string): Promise<User> => DB[id]
 
 const existsUser = async (id: string): Promise<boolean> =>
   (await getUser(id)) !== undefined
@@ -50,9 +50,8 @@ export const deleteUser = async (id: string): Promise<boolean> => {
   return true
 }
 
-export const getOrdersForUser = async (
-  userId: string,
-): Promise<Order[] | undefined> => DB[userId]?.orders
+export const getOrdersForUser = async (userId: string): Promise<Order[]> =>
+  DB[userId]?.orders || []
 
 export const createOrderForUser = async (
   userId: string,
@@ -60,6 +59,7 @@ export const createOrderForUser = async (
 ): Promise<Order | undefined> => {
   if (!(await existsUser(userId))) return
   const orders = await getOrdersForUser(userId)
+
   const biggerId =
     orders.length === 0
       ? 0
