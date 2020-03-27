@@ -19,7 +19,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test && test:types",
+    "test": "tsdx test",
     "test:types": "typings-tester --config ./tsconfig.json type-tests/*.ts",
     "lint": "tsdx lint src",
     "prepare": "tsdx build"
