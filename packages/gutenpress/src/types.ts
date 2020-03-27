@@ -6,7 +6,8 @@ export interface RequestParams<
   Context = {},
   Method extends HTTPMethod = HTTPMethod
 > {
-  readonly query: Record<string, string>
+  // COMBAK: find a way to enforce values in the query object are strings
+  readonly query: any
   readonly body: Method extends 'GET' ? void : any
   readonly context: Context
   readonly headers: Record<string, string>
