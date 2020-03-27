@@ -1,8 +1,10 @@
 import { HTTPMethod, RequestParams, Resource } from './types'
 
+type PossibleResponse = Error | void | unknown
+
 const createHandlerForMethod = <Method extends HTTPMethod>(method: Method) => <
   Path extends string,
-  Response extends Promise<{} | undefined | Error>,
+  Response extends PossibleResponse | Promise<PossibleResponse>,
   Context
 >(
   path: Path,

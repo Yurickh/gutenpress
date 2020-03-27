@@ -7,7 +7,7 @@ export interface RequestParams<
   Method extends HTTPMethod = HTTPMethod
 > {
   readonly query: Record<string, string>
-  readonly body: Method extends 'GET' ? undefined : any
+  readonly body: Method extends 'GET' ? void : any
   readonly context: Context
   readonly headers: Record<string, string>
 }
