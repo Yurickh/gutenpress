@@ -10,11 +10,11 @@ import { mapObject } from './helpers/mapObject'
 
 type NonErrorReturn<T> = T extends Error ? never : T
 
-type Wrapper<OutputContext, InputContext = object> = (
+type Wrapper<OutputContext, InputContext = {}> = (
   params: RequestParams<InputContext, HTTPMethod>,
 ) => OutputContext
 
-const wrapMethods = <InputContext, OutputContext>(
+const wrapMethods = <OutputContext, InputContext>(
   wrapper: Wrapper<OutputContext, InputContext>,
   single: MethodGroup<NonErrorReturn<OutputContext>>,
 ): MethodGroup<InputContext> =>
@@ -48,15 +48,11 @@ const wrapResource = <InputContext, OutputContext>(
 ) => Resource<Path, InputContext>) =>
   mapObject(([path, methods]) => [path, wrapMethods(wrapper, methods)])
 
-export const wrap = <
-  InputContext,
-  OutputContext,
-  Resources extends Resource<any, NonErrorReturn<OutputContext>>[]
->(
+export const wrap = <OutputContext, InputContext = {}>(
   wrapper: Wrapper<OutputContext, InputContext>,
-  resources: Resources,
+  resources: Resource<any, NonErrorReturn<OutputContext>>[],
 ): Resource<
-  Resources extends (infer R)[] ? KeysOf<R> : never,
+  typeof resources extends (infer R)[] ? KeysOf<R> : never,
   InputContext
 > => {
   const mappedResources = resources.map(wrapResource(wrapper))
