@@ -20,6 +20,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
+    "test:types": "typings-tester --config ./tsconfig.json type-tests/*.ts",
     "lint": "tsdx lint src",
     "prepare": "tsdx build"
   },
@@ -27,6 +28,7 @@
     "extends": "../../.eslintrc.json"
   },
   "devDependencies": {
-    "tsdx": "^0.13.0"
+    "tsdx": "^0.13.0",
+    "typings-tester": "^0.3.2"
   }
 }

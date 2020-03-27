@@ -32,6 +32,11 @@ jobs:
           CI: true
 
       - name: Test
-        run: yarn lerna exec "yarn test --ci --coverage --maxWorkers=2 --passWithNoTests"
+        run: yarn lerna exec --stream --parallel "yarn test --ci --coverage --maxWorkers=2 --passWithNoTests"
+        env:
+          CI: true
+
+      - name: Test types
+        run: yarn lerna exec --stream --parallel --no-private "yarn test:types"
         env:
           CI: true

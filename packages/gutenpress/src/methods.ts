@@ -1,12 +1,11 @@
-import { HTTPMethod, RequestParams, Resource } from './types'
+import { HTTPMethod, Resource, Action } from './types'
 
 const createHandlerForMethod = <Method extends HTTPMethod>(method: Method) => <
   Path extends string,
-  Response extends Promise<{} | undefined | Error>,
   Context
 >(
   path: Path,
-  action: (params: RequestParams<Context, Method>) => Response,
+  action: Action<Method, Context>,
 ) =>
   ({
     [path]: {

@@ -7,14 +7,16 @@ export interface RequestParams<
   Method extends HTTPMethod = HTTPMethod
 > {
   readonly query: Record<string, string>
-  readonly body: Method extends 'GET' ? undefined : any
+  readonly body: Method extends 'GET' ? void : any
   readonly context: Context
   readonly headers: Record<string, string>
 }
 
+type PossibleResponse = Error | void | unknown
+
 export type Action<Method extends HTTPMethod, Context = object> = (
   params: RequestParams<Context, Method>,
-) => Error | undefined | unknown
+) => PossibleResponse | Promise<PossibleResponse>
 
 export type MethodGroup<Context> = {
   [method in HTTPMethod]?: Action<method, Context>
