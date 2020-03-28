@@ -28,21 +28,18 @@ type InitialContextBuilder<InitialContext> = (
   res: http.ServerResponse,
 ) => InitialContext
 
-const defaultInitialContextBuilder: InitialContextBuilder<{}> = (
+type EmptyObject = { [key: string]: never }
+
+const defaultInitialContextBuilder: InitialContextBuilder<EmptyObject> = (
   _req: http.IncomingMessage,
   _res: http.ServerResponse,
 ) => ({})
 
-export const toRouter = <
-  InitialContext = {},
-  Resources extends Resource<any, InitialContext>[] = []
->(
-  resources: Resources,
-  initialContextBuilder = defaultInitialContextBuilder as InitialContextBuilder<
-    InitialContext
-  >,
+const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
+  resources: Resource<any, ReturnType<InitialContextBuilder<InitialContext>>>[],
+  initialContextBuilder: InitialContextBuilder<InitialContext>,
 ) => {
-  const resource = combine<InitialContext, Resources>(resources)
+  const resource = combine<InitialContext, typeof resources>(resources)
 
   return (req: http.IncomingMessage, res: http.ServerResponse) => {
     if (req.url === undefined) {
@@ -116,3 +113,22 @@ export const toRouter = <
     })
   }
 }
+
+interface AdaptHTTPConfig<InitialContext> {
+  initialContextBuilder: InitialContextBuilder<InitialContext>
+}
+
+const defaultConfig = {
+  initialContextBuilder: defaultInitialContextBuilder,
+}
+
+export const toRouterWithConfig = <Config extends AdaptHTTPConfig<any>>(
+  config: Config,
+) => (
+  resources: Resource<
+    any,
+    Config extends AdaptHTTPConfig<infer Context> ? Context : never
+  >[],
+) => transformResourcesIntoRouter(resources, config.initialContextBuilder)
+
+export const toRouter = toRouterWithConfig(defaultConfig)
