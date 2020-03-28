@@ -3136,6 +3136,16 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
+gutenpress-adapt-http@^0.0.0-alpha.1:
+  version "0.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/gutenpress-adapt-http/-/gutenpress-adapt-http-0.0.0-alpha.1.tgz#3d3ee295928386d9ab65b700b8bff5534da88591"
+  integrity sha512-5RnBGiwx44M+mQbdGtENeRJ1vgNciOk8b4WDsTaB0iaR2XsDwvzavBDuAHffz16vlp3xYyTBaRtabxLrc0Kv+g==
+
+gutenpress@^0.0.0-alpha.1:
+  version "0.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/gutenpress/-/gutenpress-0.0.0-alpha.1.tgz#0c046e5641a7b6508f6a8144a24f91fb8470b0f5"
+  integrity sha512-YGTsziWli4b3kPbRAL4Op4aFQu7zh5bcJtmGfE0PvayleW2k882PfaiDDzKt79ut4t0sLlj8gLmj9u7ijH89Pg==
+
 har-schema@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/har-schema/-/har-schema-2.0.0.tgz#a94c2224ebcac04782a0d9035521f24735b7ec92"
@@ -6355,7 +6365,7 @@ type-is@~1.6.17, type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@^3.7.3:
+typescript@^3.7.3, typescript@^3.8.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
   integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
