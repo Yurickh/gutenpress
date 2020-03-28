@@ -4,4 +4,4 @@ export { wrap } from './wrap'
 export { toRouter } from './toRouter'
 export { combine } from './helpers/combine'
 
-export { RequestParams } from './types'
+export { RequestParams, Resource, HTTPMethod } from './types'
