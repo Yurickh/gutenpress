@@ -1,0 +1,46 @@
+{
+  "name": "@gutenpress/adapt-mappersmith",
+  "version": "0.0.0-alpha.3",
+  "description": "Transforms a gutenpress definition into a mappersmith client",
+  "main": "dist/index.js",
+  "module": "dist/gutenpress-adapt-mappersmith.esm.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yurickh/gutenpress.git"
+  },
+  "keywords": [
+    "gutenpress",
+    "mappersmith"
+  ],
+  "author": "Yurick <yurick.hauschild@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "test:types": "typings-tester --config ./tsconfig.json type-tests/*.ts",
+    "lint": "tsdx lint src",
+    "prepare": "tsdx build"
+  },
+  "eslint": {
+    "extends": "../../.eslintrc.json"
+  },
+  "peerDependencies": {
+    "@gutenpress/core": "^0.0.0-alpha.3",
+    "mappersmith": "^2.32.1"
+  },
+  "devDependencies": {
+    "@gutenpress/core": "^0.0.0-alpha.3",
+    "mappersmith": "^2.32.1",
+    "tsdx": "^0.13.0",
+    "typings-tester": "^0.3.2"
+  }
+}
