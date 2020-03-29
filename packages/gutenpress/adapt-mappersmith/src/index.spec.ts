@@ -7,8 +7,8 @@ describe('toClientDefinition', () => {
 
     expect(toClientDefinition(resources)).toEqual({
       Order: {
-        all: { path: '/order' },
-        create: { method: 'post', path: '/order' },
+        all: { method: 'GET', path: '/order' },
+        create: { method: 'POST', path: '/order' },
       },
     })
   })
