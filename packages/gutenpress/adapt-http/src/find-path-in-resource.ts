@@ -9,7 +9,6 @@ export const findPathInResource = <R extends Resource<any, any>>(
 ):
   | [
       MethodGroup<R extends Resource<any, infer Context> ? Context : never>,
-
       Record<string, string>,
     ]
   | undefined => {
