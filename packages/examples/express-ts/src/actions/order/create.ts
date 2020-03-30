@@ -1,4 +1,4 @@
-import { InternalServerError, RequestParams } from 'gutenpress'
+import { InternalServerError, RequestParams } from '@gutenpress/core'
 import { Order, createOrderForUser } from '../../database'
 import { Token } from '../../wrappers/authenticate'
 

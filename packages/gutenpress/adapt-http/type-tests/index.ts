@@ -1,4 +1,4 @@
-import { get } from 'gutenpress'
+import { get } from '@gutenpress/core'
 import { toRouter, toRouterWithConfig } from '../src'
 
 /** Test: toRouter accepts only gutenpress resources */

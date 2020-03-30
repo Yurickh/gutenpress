@@ -1,4 +1,4 @@
-import { RequestParams } from 'gutenpress'
+import { RequestParams } from '@gutenpress/core'
 import { Token } from 'wrappers/authenticate'
 import { getOrdersForUser } from '../../database'
 

@@ -1,4 +1,4 @@
-import { UnauthorizedError, RequestParams } from 'gutenpress'
+import { UnauthorizedError, RequestParams } from '@gutenpress/core'
 import { authenticate as authenticateInDatabase } from '../database'
 
 export type Token = {

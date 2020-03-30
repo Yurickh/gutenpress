@@ -1,4 +1,4 @@
-import { NotFoundError, RequestParams } from 'gutenpress'
+import { NotFoundError, RequestParams } from '@gutenpress/core'
 import { Order, updateOrderForUser } from '../../database'
 import { Token } from '../../wrappers/authenticate'
 

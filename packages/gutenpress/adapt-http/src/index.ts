@@ -6,7 +6,7 @@ import {
   ClientError,
   ServerError,
   HTTPMethod,
-} from 'gutenpress'
+} from '@gutenpress/core'
 
 const resolve = (
   res: http.ServerResponse,

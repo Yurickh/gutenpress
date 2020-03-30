@@ -1,5 +1,5 @@
-import { get, post, put, wrap } from 'gutenpress'
-import { toRouter } from 'gutenpress-adapt-http'
+import { get, post, put, wrap } from '@gutenpress/core'
+import { toRouter } from '@gutenpress/adapt-http'
 import { login } from './actions/login'
 import { authenticate } from './wrappers/authenticate'
 import { listOrders } from './actions/order/list'

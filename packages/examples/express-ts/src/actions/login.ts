@@ -1,4 +1,4 @@
-import { UnauthorizedError, RequestParams } from 'gutenpress'
+import { UnauthorizedError, RequestParams } from '@gutenpress/core'
 import { authenticate } from '../database'
 
 interface Params extends RequestParams {
