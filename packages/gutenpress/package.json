@@ -30,5 +30,6 @@
   "devDependencies": {
     "tsdx": "^0.13.0",
     "typings-tester": "^0.3.2"
-  }
+  },
+  "gitHead": "a4bede27744542cb7dc299556363ef53f17b5b7f"
 }
