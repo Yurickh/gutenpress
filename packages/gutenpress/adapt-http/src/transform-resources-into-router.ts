@@ -29,8 +29,7 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
       return resolve(res, 405, { error: `Request has invalid method` })
     }
 
-    const [selectedResource, queryParams] =
-      findPathInResource(resource, url) || []
+    const [selectedResource, queryParams] = findPathInResource(resource, url)
 
     if (selectedResource === undefined) {
       return resolve(res, 404, { error: `Path [${url}] doesn't exist` })
@@ -66,6 +65,8 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
       try {
         const response = await selectedHandler({
           body,
+          // QUESTION: should we diferentiate path and query, perhaps?
+          // This means path parameters will always have precedence over query
           query: { ...extractQueryParams(url), ...queryParams },
           context: initialContextBuilder(req, res),
           headers: req.headers,
