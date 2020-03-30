@@ -1,5 +1,5 @@
+import { fromEntries } from '@gutenpress/helpers'
 import { Resource, KeysOf, MethodGroup } from '../types'
-import { fromEntries } from './fromEntries'
 
 export const combine = <
   Context,

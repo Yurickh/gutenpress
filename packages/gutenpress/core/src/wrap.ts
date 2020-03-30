@@ -1,3 +1,4 @@
+import { mapObject } from '@gutenpress/helpers'
 import {
   Resource,
   KeysOf,
@@ -6,7 +7,6 @@ import {
   MethodGroup,
 } from './types'
 import { combine } from './helpers/combine'
-import { mapObject } from './helpers/mapObject'
 
 type NonErrorReturn<T> = T extends Error ? never : T
 
