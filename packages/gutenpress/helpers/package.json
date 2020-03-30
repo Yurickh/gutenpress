@@ -1,0 +1,41 @@
+{
+  "name": "@gutenpress/helpers",
+  "version": "0.0.0-alpha.3",
+  "description": "Internal helper functions for gutenpress",
+  "main": "dist/index.js",
+  "module": "dist/helpers.esm.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yurickh/gutenpress.git"
+  },
+  "keywords": [
+    "gutenpress",
+    "utils",
+    "helpers"
+  ],
+  "author": "Yurick <yurick.hauschild@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "test:types": "typings-tester --config ./tsconfig.json type-tests/*.ts",
+    "lint": "tsdx lint src",
+    "prepare": "tsdx build"
+  },
+  "eslint": {
+    "extends": "../../.eslintrc.json"
+  },
+  "devDependencies": {
+    "tsdx": "^0.13.1",
+    "typings-tester": "^0.3.2"
+  },
+  "gitHead": "a4bede27744542cb7dc299556363ef53f17b5b7f"
+}
