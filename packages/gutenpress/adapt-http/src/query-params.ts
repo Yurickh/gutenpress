@@ -1,13 +1,4 @@
-export const fromEntries = <Target>(
-  entries: [keyof Target, Target[keyof Target]][],
-): Target =>
-  entries.reduce(
-    (acc, [key, value]) => ({
-      ...acc,
-      [key]: value,
-    }),
-    {} as Target,
-  )
+import { fromEntries } from '@gutenpress/helpers'
 
 export const extractQueryParams = (path: string) => {
   const [, queryString] = path.split('?')

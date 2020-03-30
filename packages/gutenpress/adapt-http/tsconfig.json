@@ -1,8 +1,14 @@
 {
-  "include": ["src", "types", "test"],
+  "include": [
+    "src",
+    "types",
+    "test"
+  ],
   "compilerOptions": {
     "module": "esnext",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
@@ -11,6 +17,7 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
+    "downlevelIteration": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
@@ -21,7 +28,10 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "*": ["src/*", "node_modules/*"]
+      "*": [
+        "src/*",
+        "node_modules/*"
+      ]
     },
     "esModuleInterop": true
   }

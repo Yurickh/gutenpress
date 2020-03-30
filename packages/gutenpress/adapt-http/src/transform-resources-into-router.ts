@@ -10,7 +10,7 @@ import {
 import { InitialContextBuilder, EmptyObject } from './types'
 import { resolve } from './resolve'
 import { extractQueryParams } from './query-params'
-import { findPathInResource } from './findPathInResource'
+import { findPathInResource } from './find-path-in-resource'
 
 export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
   resources: Resource<any, ReturnType<InitialContextBuilder<InitialContext>>>[],
@@ -29,7 +29,8 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
       return resolve(res, 405, { error: `Request has invalid method` })
     }
 
-    const selectedResource = findPathInResource(resource, url)
+    const [selectedResource, queryParams] =
+      findPathInResource(resource, url) || []
 
     if (selectedResource === undefined) {
       return resolve(res, 404, { error: `Path [${url}] doesn't exist` })
@@ -65,7 +66,7 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
       try {
         const response = await selectedHandler({
           body,
-          query: extractQueryParams(url),
+          query: { ...extractQueryParams(url), ...queryParams },
           context: initialContextBuilder(req, res),
           headers: req.headers,
         } as RequestParams<InitialContext>)
