@@ -9,6 +9,8 @@ import {
 } from '@gutenpress/core'
 import { InitialContextBuilder, EmptyObject } from './types'
 import { resolve } from './resolve'
+import { extractQueryParams } from './query-params'
+import { findPathInResource } from './findPathInResource'
 
 export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
   resources: Resource<any, ReturnType<InitialContextBuilder<InitialContext>>>[],
@@ -17,25 +19,27 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
   const resource = combine<InitialContext, typeof resources>(resources)
 
   return (req: http.IncomingMessage, res: http.ServerResponse) => {
-    if (req.url === undefined) {
+    const { url, method } = req
+
+    if (url === undefined) {
       return resolve(res, 404, { error: `Request has empty url` })
     }
 
-    if (req.method === undefined) {
+    if (method === undefined) {
       return resolve(res, 405, { error: `Request has invalid method` })
     }
 
-    const selectedResource = resource[req.url as keyof typeof resource]
+    const selectedResource = findPathInResource(resource, url)
 
     if (selectedResource === undefined) {
-      return resolve(res, 404, { error: `Path [${req.url}] doesn't exist` })
+      return resolve(res, 404, { error: `Path [${url}] doesn't exist` })
     }
 
-    const selectedHandler = selectedResource[req.method as HTTPMethod]
+    const selectedHandler = selectedResource[method as HTTPMethod]
 
     if (selectedHandler === undefined) {
       return resolve(res, 405, {
-        error: `Method [${req.method}] not allowed over ${req.url}`,
+        error: `Method [${method}] not allowed over ${url}`,
       })
     }
 
@@ -61,7 +65,7 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
       try {
         const response = await selectedHandler({
           body,
-          query: {},
+          query: extractQueryParams(url),
           context: initialContextBuilder(req, res),
           headers: req.headers,
         } as RequestParams<InitialContext>)
