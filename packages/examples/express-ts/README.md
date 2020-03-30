@@ -30,14 +30,20 @@ http -a admin:admin POST localhost:3000/order product="Switch" value="3000"
 #     "product": "Switch",
 #     "value": "3000"
 # }
+http -a admin:admin localhost:3000/order/1
+# {
+#     "id": "1",
+#     "product": "Switch",
+#     "value": "3000"
+# }
+http -a admin:admin PUT localhost:3000/order/1 value=6000
+# 204 (empty response)
 http -a admin:admin localhost:3000/order
 # [
-#     {
-#         "id": "1",
-#         "product": "Switch",
-#         "value": "3000"
-#     }
+#   {
+#       "id": "1",
+#       "product": "Switch",
+#       "value": "6000"
+#   }
 # ]
 ```
-
-<!-- TODO: once we have support to query, add use cases here -->
