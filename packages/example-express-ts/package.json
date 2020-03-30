@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "gutenpress": "^0.0.0-alpha.2",
-    "gutenpress-adapt-http": "^0.0.0-alpha.2"
+    "@gutenpress/core": "^0.0.0-alpha.2",
+    "@gutenpress/adapt-http": "^0.0.0-alpha.2"
   }
 }

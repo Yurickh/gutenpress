@@ -1,5 +1,5 @@
 {
-  "name": "gutenpress",
+  "name": "@gutenpress/core",
   "version": "0.0.0-alpha.2",
   "description": "A typed, functional and declarative way of writing your nodeJS APIs",
   "main": "dist/index.js",
