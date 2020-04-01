@@ -3,12 +3,12 @@ import { fromEntries } from '@gutenpress/helpers'
 import { pathToRegex } from './path-to-regex'
 import { ContextFrom } from './types'
 
-type QueryParams = Record<string, string>
+type PathParams = Record<string, string>
 
 export const findPathInResource = <R extends Resource<any, any>>(
   resource: R,
   path: string,
-): [MethodGroup<ContextFrom<R>>, QueryParams] | [] => {
+): [MethodGroup<ContextFrom<R>>, PathParams] | [] => {
   const [baseUrl] = path.split('?')
   const possiblePaths = Object.keys(resource).map(
     path => [path, pathToRegex(path)] as [string, RegExp],

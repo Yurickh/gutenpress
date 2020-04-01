@@ -3,7 +3,7 @@ import { Order, updateOrderForUser } from '../../database'
 import { Token } from '../../wrappers/authenticate'
 
 interface Params extends RequestParams<Token> {
-  query: { id: string }
+  path: { id: string }
   body: Partial<Order>
 }
 
@@ -12,10 +12,10 @@ type Response = undefined | NotFoundError
 export const updateOrderById = async ({
   body: order,
   context: token,
-  query,
+  path,
 }: Params): Promise<Response> => {
-  if (!(await updateOrderForUser(token.userId, query.id, order))) {
-    return new NotFoundError(`Could not found order with id ${query.id}`)
+  if (!(await updateOrderForUser(token.userId, path.id, order))) {
+    return new NotFoundError(`Could not found order with id ${path.id}`)
   }
 
   return undefined
