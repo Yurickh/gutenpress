@@ -4,7 +4,7 @@
   "description": "Internal helper functions for gutenpress",
   "main": "dist/index.js",
   "module": "dist/helpers.esm.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Yurickh/gutenpress.git"
