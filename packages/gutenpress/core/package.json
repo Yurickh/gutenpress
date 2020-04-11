@@ -1,6 +1,6 @@
 {
   "name": "@gutenpress/core",
-  "version": "0.0.0-alpha.5",
+  "version": "0.0.0-alpha.6",
   "description": "A typed, functional and declarative way of writing your nodeJS APIs",
   "main": "dist/index.js",
   "module": "dist/gutenpress.esm.js",
@@ -33,6 +33,6 @@
   },
   "gitHead": "a4bede27744542cb7dc299556363ef53f17b5b7f",
   "dependencies": {
-    "@gutenpress/helpers": "^0.0.0-alpha.5"
+    "@gutenpress/helpers": "^0.0.0-alpha.6"
   }
 }
