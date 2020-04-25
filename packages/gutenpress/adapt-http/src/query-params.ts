@@ -5,7 +5,7 @@ export const extractQueryParams = (path: string) => {
 
   if (queryString === undefined) return {}
 
-  const entries = queryString.split('&').map(token => token.split('=')) as [
+  const entries = queryString.split('&').map((token) => token.split('=')) as [
     string,
     string,
   ][]

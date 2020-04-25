@@ -25,7 +25,7 @@ export function mapObject<Source, Target>(
   object?: Source,
 ): Target | ((source: Source) => Target) {
   if (object === undefined) {
-    return object => uncurriedMapObject(callback, object)
+    return (object) => uncurriedMapObject(callback, object)
   } else {
     return uncurriedMapObject(callback, object)
   }

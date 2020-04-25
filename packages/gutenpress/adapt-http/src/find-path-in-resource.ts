@@ -11,7 +11,7 @@ export const findPathInResource = <R extends Resource<any, any>>(
 ): [MethodGroup<ContextFrom<R>>, PathParams] | [] => {
   const [baseUrl] = path.split('?')
   const possiblePaths = Object.keys(resource).map(
-    path => [path, pathToRegex(path)] as [string, RegExp],
+    (path) => [path, pathToRegex(path)] as [string, RegExp],
   )
   const [matchingPath, matchingRegex] =
     possiblePaths.find(([, regex]) => regex.test(baseUrl)) || []
@@ -25,9 +25,9 @@ export const findPathInResource = <R extends Resource<any, any>>(
   const queryValues = (baseUrl.match(matchingRegex) || []).slice(1)
   const queryNames = matchingPath
     .split('/')
-    .filter(token => token.startsWith(':'))
+    .filter((token) => token.startsWith(':'))
     // Removes the leading colon
-    .map(token => token.slice(1))
+    .map((token) => token.slice(1))
 
   const queryEntries = queryValues.map(
     (value, index) => [queryNames[index], value] as [string, string],

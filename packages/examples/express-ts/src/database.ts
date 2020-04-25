@@ -63,7 +63,7 @@ export const createOrderForUser = async (
   const biggerId =
     orders.length === 0
       ? 0
-      : Math.max(...orders.map(order => parseInt(order.id)))
+      : Math.max(...orders.map((order) => parseInt(order.id)))
   const createdOrder = {
     ...order,
     id: String(biggerId + 1),
@@ -82,7 +82,7 @@ export const updateOrderForUser = async (
   if (!(await existsUser(userId))) return false
   const orders = await getOrdersForUser(userId)
 
-  const previousOrderIndex = orders.findIndex(order => order.id === orderId)
+  const previousOrderIndex = orders.findIndex((order) => order.id === orderId)
 
   if (previousOrderIndex === -1) return false
 
@@ -102,7 +102,7 @@ export const deleteOrderForUser = async (
   if (!(await existsUser(userId))) return false
   const orders = await getOrdersForUser(userId)
 
-  const orderIndex = orders.findIndex(order => order.id === orderId)
+  const orderIndex = orders.findIndex((order) => order.id === orderId)
 
   if (orderIndex === -1) return false
 
