@@ -4,7 +4,7 @@
   "description": "Internal helper functions for gutenpress",
   "main": "dist/index.js",
   "module": "dist/helpers.esm.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Yurickh/gutenpress.git"
@@ -18,16 +18,20 @@
   "license": "MIT",
   "files": [
     "dist",
+    "dist/index.d.ts",
     "src"
   ],
   "engines": {
     "node": ">=10"
   },
+  "tsd": {
+    "directory": "type-tests"
+  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "test:types": "typings-tester --config ./tsconfig.json type-tests/*.ts",
+    "test:types": "tsd",
     "lint": "tsdx lint src",
     "prepare": "tsdx build"
   },
