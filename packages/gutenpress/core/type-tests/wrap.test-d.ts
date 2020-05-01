@@ -10,18 +10,18 @@ import { get, wrap } from '../src'
     ]),
   )
 
-  // FIXME: #23
-  // wrap(() => ({ potato: 'solid' }), [
-  //   get('/', ({ context }) => context.potato),
+  wrap(() => ({ potato: 'solid' }), [
+    get('/', ({ context }) => context.potato),
 
-  //   wrap(({ context }) => ({ ...context, solid: 'potato' }), [
-  //     get(
-  //       '/nested',
-  //       // You need to define the type of the context, so it is not "unknown"
-  //       ({ context }) => context.potato + context.solid,
-  //     ),
-  //   ]),
-  // ])
+    wrap(
+      // You need to define the type of the context, so it is not "unknown"
+      ({ context }: { context: { potato: string } }) => ({
+        ...context,
+        solid: 'potato',
+      }),
+      [get('/nested', ({ context }) => context.potato + context.solid)],
+    ),
+  ])
 
   expectError(
     wrap(() => ({ potato: 'solid' }), [

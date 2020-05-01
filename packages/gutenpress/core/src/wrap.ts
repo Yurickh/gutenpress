@@ -28,11 +28,7 @@ const wrapMethods = <OutputContext, InputContext>(
           return outputContext
         }
 
-        if (action === undefined) {
-          return undefined
-        }
-
-        return action({
+        return action?.({
           ...params,
           context: outputContext as NonErrorReturn<OutputContext>,
         })
@@ -48,11 +44,15 @@ const wrapResource = <InputContext, OutputContext>(
 ) => Resource<Path, InputContext>) =>
   mapObject(([path, methods]) => [path, wrapMethods(wrapper, methods)])
 
-export const wrap = <OutputContext, InputContext = {}>(
+export const wrap = <
+  Resources extends Resource<any, NonErrorReturn<OutputContext>>[],
+  OutputContext,
+  InputContext = {}
+>(
   wrapper: Wrapper<OutputContext, InputContext>,
-  resources: Resource<any, NonErrorReturn<OutputContext>>[],
+  resources: Resources,
 ): Resource<
-  typeof resources extends (infer R)[] ? KeysOf<R> : never,
+  Resources extends (infer R)[] ? KeysOf<R> : never,
   InputContext
 > => {
   const mappedResources = resources.map(wrapResource(wrapper))
