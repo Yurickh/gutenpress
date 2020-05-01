@@ -6,6 +6,9 @@
   "author": "Yurick <yurick.hauschild@gmail.com>",
   "license": "MIT",
   "private": false,
+  "resolutions": {
+    "handlebars": "^4.7.4"
+  },
   "devDependencies": {
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.0",
