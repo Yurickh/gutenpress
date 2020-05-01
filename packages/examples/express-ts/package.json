@@ -20,6 +20,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
+    "test:types": "echo 'Yet to write test types for examples'",
     "prepare": "tsdx build",
     "dev": "tsdx watch & nodemon dist/index.js"
   },

@@ -37,6 +37,6 @@ jobs:
           CI: true
 
       - name: Test types
-        run: yarn lerna exec --stream --parallel --no-private "yarn test:types"
+        run: yarn lerna exec --stream --parallel "yarn test:types"
         env:
           CI: true
