@@ -1,15 +1,19 @@
+import { expectError, expectType } from 'tsd'
 import { get, post, wrap } from '../src'
+import { Resource } from '../src/types'
 
 /** Test: get() doesn't accept an action that expects a body */
 
 // When declared inline
 {
-  get('/:id', ({ query }) => query)
-  // typings:expect-error
-  get('/', ({ body, context }) => ({
-    potato: body.potato,
-    solid: context,
-  }))
+  expectType<Resource<'/:id', unknown>>(get('/:id', ({ query }) => query))
+
+  expectError(
+    get('/', ({ body, context }) => ({
+      potato: body.potato,
+      solid: context,
+    })),
+  )
 }
 
 // When passed as a function
@@ -27,8 +31,8 @@ import { get, post, wrap } from '../src'
     potato: body.potato,
     solid: context,
   })
-  // typings:expect-error
-  get('/', bodyfullAction)
+
+  expectError(get('/', bodyfullAction))
 }
 
 /** Test: methods don't accept actions that expect more context than it currently has */
@@ -40,10 +44,7 @@ import { get, post, wrap } from '../src'
     post('/', ({ context: { potato } }) => potato),
   ])
 
-  // typings:expect-error
-  get('/', ({ context }) => context.potato)
-  // typings:expect-error
-  post('/', ({ context: { potato } }) => potato)
+  expectError(post('/', ({ context: { potato } }) => potato))
 }
 
 // When inside of a mismatching context
@@ -54,12 +55,17 @@ import { get, post, wrap } from '../src'
     post('/', ({ context: { solid } }) => solid),
   ])
 
-  wrap(() => ({ potato: 'solid' }), [
-    // typings:expect-error
-    get('/', ({ context }) => context.solid),
-    // typings:expect-error
-    post('/', ({ context: { solid } }) => solid),
-  ])
+  expectError(
+    wrap(() => ({ potato: 'solid' }), [
+      get('/', ({ context }) => context.solid),
+    ]),
+  )
+
+  expectError(
+    wrap(() => ({ potato: 'solid' }), [
+      post('/', ({ context: { solid } }) => solid),
+    ]),
+  )
 }
 
 // When context is declared through a variable rather than inline
@@ -69,10 +75,10 @@ import { get, post, wrap } from '../src'
   wrap(wrapper, [
     get('/', ({ context }) => context.potato),
     post('/', ({ context: { potato } }) => potato),
-
-    // typings:expect-error
-    get('/error', ({ context }) => context.solid),
-    // typings:expect-error
-    post('/error', ({ context: { solid } }) => solid),
   ])
+
+  expectError(wrap(wrapper, [get('/error', ({ context }) => context.solid)]))
+  expectError(
+    wrap(wrapper, [post('/error', ({ context: { solid } }) => solid)]),
+  )
 }

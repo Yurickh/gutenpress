@@ -1,31 +1,39 @@
 import { fromEntries } from '../fromEntries'
 
+type Entry<Obj> = [keyof Obj, Obj[keyof Obj]]
+
 const entries = <Target>(target: Target) =>
-  Object.entries(target) as [keyof Target, Target[keyof Target]][]
+  Object.entries(target) as Entry<Target>[]
 
-type Callback<Source, Target> = (
-  value: [keyof Source, Source[keyof Source]],
-) => [keyof Target, Target[keyof Target]]
+type Callback<Source, TargetKey, TargetValue> = (
+  pairs: Entry<Source>,
+) => [TargetKey, TargetValue]
 
-const uncurriedMapObject = <Source, Target>(
-  callback: Callback<Source, Target>,
+const uncurriedMapObject = <Source, TargetKey extends PropertyKey, TargetValue>(
+  callback: Callback<Source, TargetKey, TargetValue>,
   object: Source,
-): Target => fromEntries(entries(object).map(callback))
+) =>
+  (fromEntries(entries(object).map(callback)) as unknown) as Record<
+    TargetKey,
+    TargetValue
+  >
 
-export function mapObject<Source, Target>(
-  callback: Callback<Source, Target>,
-): (source: Source) => Target
-export function mapObject<Source, Target>(
-  callback: Callback<Source, Target>,
+export function mapObject<Source, TargetKey extends PropertyKey, TargetValue>(
+  callback: Callback<Source, TargetKey, TargetValue>,
+): (source: Source) => { [k in TargetKey]: TargetValue }
+export function mapObject<Source, TargetKey extends PropertyKey, TargetValue>(
+  callback: Callback<Source, TargetKey, TargetValue>,
   object: Source,
-): Target
+): { [k in TargetKey]: TargetValue }
 
-export function mapObject<Source, Target>(
-  callback: Callback<Source, Target>,
+export function mapObject<Source, TargetKey extends PropertyKey, TargetValue>(
+  callback: Callback<Source, TargetKey, TargetValue>,
   object?: Source,
-): Target | ((source: Source) => Target) {
+):
+  | { [k in TargetKey]: TargetValue }
+  | ((source: Source) => { [k in TargetKey]: TargetValue }) {
   if (object === undefined) {
-    return object => uncurriedMapObject(callback, object)
+    return (object) => uncurriedMapObject(callback, object)
   } else {
     return uncurriedMapObject(callback, object)
   }

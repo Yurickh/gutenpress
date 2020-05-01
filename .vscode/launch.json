@@ -10,6 +10,6 @@
       "request": "launch",
       "type": "pwa-node-terminal",
       "cwd": "${workspaceFolder}/packages/examples/express-ts"
-    },
+    }
   ]
 }

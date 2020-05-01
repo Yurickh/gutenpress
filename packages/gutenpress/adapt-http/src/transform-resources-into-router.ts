@@ -45,7 +45,7 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
 
     let bodyBuffer = ''
 
-    req.on('data', data => (bodyBuffer += data))
+    req.on('data', (data) => (bodyBuffer += data))
 
     req.on('end', async () => {
       let body: object | undefined
