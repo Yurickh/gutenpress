@@ -4,23 +4,27 @@
   "description": "A typed, functional and declarative way of writing your nodeJS APIs",
   "main": "dist/index.js",
   "module": "dist/gutenpress.esm.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:Yurickh/gutenpress.git",
   "author": "Yurick <yurick.hauschild@gmail.com>",
   "license": "MIT",
   "private": false,
   "files": [
     "dist",
+    "dist/index.d.ts",
     "src"
   ],
   "engines": {
     "node": ">=10"
   },
+  "tsd": {
+    "directory": "type-tests"
+  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "test:types": "typings-tester --config ./tsconfig.json type-tests/*.ts",
+    "test:types": "tsd",
     "lint": "tsdx lint src",
     "prepare": "tsdx build"
   },
