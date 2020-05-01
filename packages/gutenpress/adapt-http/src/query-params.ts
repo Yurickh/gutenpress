@@ -10,5 +10,5 @@ export const extractQueryParams = (path: string) => {
     string,
   ][]
 
-  return fromEntries<{ [k: string]: string }>(entries)
+  return fromEntries(entries)
 }
