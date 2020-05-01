@@ -25,7 +25,7 @@
     "dev": "tsdx watch & nodemon dist/index.js"
   },
   "eslint": {
-    "extends": "../../.eslintrc.json"
+    "extends": "../../../.eslintrc.json"
   },
   "devDependencies": {
     "@types/express": "^4.17.3",

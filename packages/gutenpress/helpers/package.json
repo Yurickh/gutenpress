@@ -36,7 +36,7 @@
     "prepare": "tsdx build"
   },
   "eslint": {
-    "extends": "../../.eslintrc.json"
+    "extends": "../../../.eslintrc.json"
   },
   "devDependencies": {
     "tsdx": "^0.13.1"
