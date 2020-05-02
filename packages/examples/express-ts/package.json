@@ -1,6 +1,6 @@
 {
   "name": "example-express-ts",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "description": "A complete typescript and express backend example of gutenpress",
   "main": "dist/index.js",
   "module": "dist/example-node-ts.esm.js",
@@ -34,8 +34,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@gutenpress/adapt-http": "^0.0.0-alpha.6",
-    "@gutenpress/core": "^0.0.0-alpha.6",
+    "@gutenpress/adapt-http": "^0.0.0-alpha.7",
+    "@gutenpress/core": "^0.0.0-alpha.7",
     "express": "^4.17.1"
   }
 }

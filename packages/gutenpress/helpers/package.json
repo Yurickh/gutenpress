@@ -1,6 +1,6 @@
 {
   "name": "@gutenpress/helpers",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "description": "Internal helper functions for gutenpress",
   "main": "dist/index.js",
   "module": "dist/helpers.esm.js",
