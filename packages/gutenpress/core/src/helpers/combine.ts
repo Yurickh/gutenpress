@@ -1,15 +1,22 @@
-import { mapObject } from '@gutenpress/helpers'
-import { Resource, KeysOf, MethodGroup } from '../types'
+import { mapObject, UnionToIntersection } from '@gutenpress/helpers'
+import { Resource, KeysOf, MethodGroup, SingleResource } from '../types'
+
+export type Combine<Resources extends SingleResource<any, any, any, any>[]> = {
+  [path in keyof UnionToIntersection<Resources[number]>]: {
+    [method in keyof UnionToIntersection<
+      Resources[number]
+    >[path]]: UnionToIntersection<Resources[number]>[path][method]
+  }
+}
 
 export const combine = <
-  Context,
-  Resources extends Resource<string, Context>[],
+  Resources extends Resource<string, any>[],
   ResourcePath extends string = Resources extends (infer R)[]
     ? KeysOf<R>
     : never
 >(
   resources: Resources,
-): Resource<ResourcePath, Context> => {
+): Combine<Resources> => {
   return resources.reduce(
     (acc, curr) => ({
       // add any new paths
@@ -25,10 +32,15 @@ export const combine = <
               // but spreading undefined is a no-op so we're virtually safe in this operation.
               ...curr[path as keyof typeof curr],
             },
-          ] as [ResourcePath, MethodGroup<Context>],
+          ] as [
+            ResourcePath,
+            MethodGroup<
+              Resources extends Resource<any, infer Context> ? Context : never
+            >,
+          ],
         acc,
       ),
     }),
     {},
-  )
+  ) as Combine<Resources>
 }

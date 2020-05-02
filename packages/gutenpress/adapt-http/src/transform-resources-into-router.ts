@@ -16,7 +16,7 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
   resources: Resource<any, ReturnType<InitialContextBuilder<InitialContext>>>[],
   initialContextBuilder: InitialContextBuilder<InitialContext>,
 ) => {
-  const resource = combine<InitialContext, typeof resources>(resources)
+  const resource = combine(resources)
 
   return (req: http.IncomingMessage, res: http.ServerResponse) => {
     const { url, method } = req
