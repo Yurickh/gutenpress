@@ -1,12 +1,14 @@
 import { expectError } from 'tsd'
 import { get, wrap } from '../src'
 
-/** Test: nested wraps receives parent context */
+/** Test: nested methods receives parent context */
 
 {
   expectError(
     wrap(() => ({ potato: 'solid' }), [
-      get('/error', ({ context }) => context.roberto),
+      get('/error', ({ context }: { context: { roberto: string } }) => {
+        context.roberto
+      }),
     ]),
   )
 
