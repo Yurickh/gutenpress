@@ -27,3 +27,12 @@ export type MethodGroup<Context> = {
 export type Resource<Path extends string, Context = object> = {
   [path in Path]: MethodGroup<Context>
 }
+
+export type SingleResource<
+  Path extends string,
+  Method extends HTTPMethod,
+  Context,
+  Handler extends Action<Method, Context>
+> = {
+  [p in Path]: { [m in Method]: Handler }
+}
