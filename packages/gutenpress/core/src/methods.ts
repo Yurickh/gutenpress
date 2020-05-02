@@ -1,17 +1,19 @@
-import { HTTPMethod, Resource, Action } from './types'
+import { HTTPMethod, Action } from './types'
 
 const createHandlerForMethod = <Method extends HTTPMethod>(method: Method) => <
   Path extends string,
-  Context
+  Handler extends Action<Method, any>
 >(
   path: Path,
-  action: Action<Method, Context>,
+  action: Handler,
 ) =>
   ({
     [path]: {
       [method]: action,
     },
-  } as Resource<Path, Context>)
+  } as {
+    [p in Path]: { [m in Method]: Handler }
+  })
 
 export const get = createHandlerForMethod('GET')
 export const post = createHandlerForMethod('POST')

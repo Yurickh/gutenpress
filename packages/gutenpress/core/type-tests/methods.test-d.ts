@@ -1,12 +1,13 @@
 import { expectError, expectType } from 'tsd'
-import { get, post, wrap } from '../src'
-import { Resource } from '../src/types'
+import { get, post, wrap, RequestParams } from '../src'
 
 /** Test: get() doesn't accept an action that expects a body */
 
 // When declared inline
 {
-  expectType<Resource<'/:id', unknown>>(get('/:id', ({ query }) => query))
+  expectType<{ '/:id': { GET: (params: RequestParams<any, 'GET'>) => any } }>(
+    get('/:id', ({ query }) => query),
+  )
 
   expectError(
     get('/', ({ body, context }) => ({
@@ -37,16 +38,6 @@ import { Resource } from '../src/types'
 
 /** Test: methods don't accept actions that expect more context than it currently has */
 
-// When loose
-{
-  wrap(() => ({ potato: 'solid' }), [
-    get('/', ({ context }) => context.potato),
-    post('/', ({ context: { potato } }) => potato),
-  ])
-
-  expectError(post('/', ({ context: { potato } }) => potato))
-}
-
 // When inside of a mismatching context
 {
   // It accepts partial usage of the context
@@ -55,30 +46,15 @@ import { Resource } from '../src/types'
     post('/', ({ context: { solid } }) => solid),
   ])
 
-  expectError(
-    wrap(() => ({ potato: 'solid' }), [
-      get('/', ({ context }) => context.solid),
-    ]),
-  )
+  wrap(() => ({ potato: 'solid' }), [
+    get('/', ({ context }) => {
+      expectType<{ potato: string }>(context)
+    }),
+  ])
 
   expectError(
     wrap(() => ({ potato: 'solid' }), [
       post('/', ({ context: { solid } }) => solid),
     ]),
-  )
-}
-
-// When context is declared through a variable rather than inline
-{
-  const wrapper = () => ({ potato: 'solid' })
-
-  wrap(wrapper, [
-    get('/', ({ context }) => context.potato),
-    post('/', ({ context: { potato } }) => potato),
-  ])
-
-  expectError(wrap(wrapper, [get('/error', ({ context }) => context.solid)]))
-  expectError(
-    wrap(wrapper, [post('/error', ({ context: { solid } }) => solid)]),
   )
 }
