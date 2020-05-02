@@ -1,4 +1,4 @@
-import { fromEntries } from '@gutenpress/helpers'
+import { mapObject } from '@gutenpress/helpers'
 import { Resource, KeysOf, MethodGroup } from '../types'
 
 export const combine = <
@@ -15,16 +15,18 @@ export const combine = <
       // add any new paths
       ...curr,
       // and extends existing paths with the new methods
-      ...fromEntries(
-        Object.entries<MethodGroup<Context>>(acc).map(([path, methodGroup]) => [
-          path,
-          {
-            ...methodGroup,
-            // NOTE: this is kind of a hack, as `path` is not necessarily present in `curr`
-            // but spreading undefined is a no-op so we're virtually safe in this operation.
-            ...curr[path as keyof typeof curr],
-          },
-        ]) as [ResourcePath, MethodGroup<Context>][],
+      ...mapObject(
+        ([path, methodGroup]) =>
+          [
+            path,
+            {
+              ...methodGroup,
+              // NOTE: this is kind of a hack, as `path` is not necessarily present in `curr`
+              // but spreading undefined is a no-op so we're virtually safe in this operation.
+              ...curr[path as keyof typeof curr],
+            },
+          ] as [ResourcePath, MethodGroup<Context>],
+        acc,
       ),
     }),
     {},
