@@ -23,9 +23,13 @@ import { toRouter, toRouterWithConfig } from '../src'
 
 /** Test: toRouter injects the correct initial context */
 {
-  expectType<(req: http.IncomingMessage, res: http.ServerResponse) => void>(
-    toRouter([get('/', () => 10)]),
-  )
+  expectType<
+    (
+      req: http.IncomingMessage,
+      res: http.ServerResponse,
+      next?: () => void,
+    ) => void
+  >(toRouter([get('/', () => 10)]))
 
   expectError(
     toRouter([
@@ -36,7 +40,13 @@ import { toRouter, toRouterWithConfig } from '../src'
     ]),
   )
 
-  expectType<(req: http.IncomingMessage, res: http.ServerResponse) => void>(
+  expectType<
+    (
+      req: http.IncomingMessage,
+      res: http.ServerResponse,
+      next?: () => void,
+    ) => void
+  >(
     toRouterWithConfig({
       initialContextBuilder: () => ({ potato: 'solid' }),
     })([
