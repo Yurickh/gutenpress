@@ -18,7 +18,11 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
 ) => {
   const resource = combine(resources)
 
-  return (req: http.IncomingMessage, res: http.ServerResponse) => {
+  return (
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    next?: () => void,
+  ) => {
     const { url, method } = req
 
     if (url === undefined) {
@@ -32,6 +36,11 @@ export const transformResourcesIntoRouter = <InitialContext = EmptyObject>(
     const [selectedResource, pathParams] = findPathInResource(resource, url)
 
     if (selectedResource === undefined) {
+      if (next !== undefined) {
+        next()
+        return
+      }
+
       return resolve(res, 404, { error: `Path [${url}] doesn't exist` })
     }
 
