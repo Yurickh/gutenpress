@@ -21,13 +21,18 @@ jobs:
           restore-keys: |
             nodeModules-
 
-      - name: Install dependencies and build
-        run: yarn install && yarn lerna bootstrap
+      - name: Install dependencies
+        run: yarn install
         env:
           CI: true
 
       - name: Lint
-        run: yarn lerna exec yarn lint
+        run: yarn lerna run lint --stream --parallel
+        env:
+          CI: true
+
+      - name: Build
+        run: yarn lerna run build --stream
         env:
           CI: true
 
@@ -37,6 +42,6 @@ jobs:
           CI: true
 
       - name: Test types
-        run: yarn lerna exec --stream --parallel "yarn test:types"
+        run: yarn lerna run test:types --stream --parallel
         env:
           CI: true

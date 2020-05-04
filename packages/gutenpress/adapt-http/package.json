@@ -46,11 +46,7 @@
     "@gutenpress/core": "^0.0.0-alpha.7",
     "tsdx": "^0.13.2"
   },
-  "gitHead": "a4bede27744542cb7dc299556363ef53f17b5b7f",
   "dependencies": {
     "@gutenpress/helpers": "^0.0.0-alpha.7"
-  },
-  "resolutions": {
-    "prettier": "npm:@btmills/prettier"
   }
 }
