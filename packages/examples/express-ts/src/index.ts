@@ -5,5 +5,9 @@ const app = express()
 
 app.use(router)
 
+app.get('/express', (_req, res) => {
+  res.send('Express reached')
+})
+
 console.log('Listening in port 3000....')
 app.listen(3000)
