@@ -27,7 +27,7 @@ jobs:
           CI: true
 
       - name: Lint
-        run: yarn lerna exec yarn lint
+        run: yarn lerna run lint
         env:
           CI: true
 
@@ -37,6 +37,6 @@ jobs:
           CI: true
 
       - name: Test types
-        run: yarn lerna exec --stream --parallel "yarn test:types"
+        run: yarn lerna run --stream --parallel test:types
         env:
           CI: true
