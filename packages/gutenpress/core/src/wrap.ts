@@ -49,7 +49,7 @@ const wrapAction = <
     return outputContext
   }
 
-  return action?.({
+  return action({
     ...params,
     context: outputContext as NonErrorReturn<OutputContext>,
   })

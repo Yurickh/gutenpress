@@ -14,6 +14,8 @@
 
 As you can see from the version flagged as `alpha`, this project is a work in progress. It might not even be working if you download right now. Regardless, feel free to clone the repo and give it a spin; feedback is always very welcome!
 
+Also, in retrospective, I think I overdid a bit on the types. :p~
+
 ## Project structure
 
 The [gutenpress repo](https://github.com/Yurickh/gutenpress) is a monorepo using [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
